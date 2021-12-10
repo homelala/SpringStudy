@@ -37,7 +37,7 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m";
+            String query = "select m.username from Member m";
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
             for (String s : result) {
