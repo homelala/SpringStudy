@@ -1,8 +1,12 @@
 package hellojpa;
 
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,19 +18,9 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Child child1 = new Child();
-            Child child2 = new Child();
+            em.createNativeQuery("select MEMBER_ID, CITY, STREET, ZIPCODE, USERNAME from Member")
+                    .getResultList();
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent parent1 = em.find(Parent.class, parent.getId());
-            parent1.getChildren().remove(0);
 
             tx.commit();
 
@@ -52,8 +46,5 @@ public class JpaMain {
     private static void printMemberAndTeam(Member member) {
         String userName = member.getUsername();
         System.out.println("userName = " + userName);
-
-        Team team = member.getTeam();
-        System.out.println("team = " + team.getName());
     }
 }
