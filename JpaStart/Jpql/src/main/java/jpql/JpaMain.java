@@ -1,6 +1,10 @@
 package jpql;
 
-import javax.persistence.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class JpaMain {
@@ -33,16 +37,13 @@ public class JpaMain {
             member3.setUsername("회원3");
             member3.setTeam(teamB);
             em.persist(member3);
+            
+            int count = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
 
-            em.flush();
-            em.clear();
+            System.out.println("count = " + count);
 
-            String query = "select m.username from Member m";
-            List<String> result = em.createQuery(query, String.class)
-                    .getResultList();
-            for (String s : result) {
-                System.out.println("s = " + s);
-            }
+
             tx.commit();
 
         }

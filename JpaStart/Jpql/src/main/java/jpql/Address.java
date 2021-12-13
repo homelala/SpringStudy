@@ -1,5 +1,6 @@
 package jpql;
 
+
 import javax.persistence.Embeddable;
 
 @Embeddable
